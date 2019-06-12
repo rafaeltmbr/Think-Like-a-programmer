@@ -40,8 +40,8 @@ public:
     void add(char i) {
         int temp = getDoubledSum(i);
         bool even = ++length % 2 == 0;
-        evenSum += even ? temp : i;
-        oddSum += !even ? temp : i;
+        oddSum += even ? temp : i;
+        evenSum += !even ? temp : i;
     }
     bool addChar(char c) {
         if (! isdigit(c) )
