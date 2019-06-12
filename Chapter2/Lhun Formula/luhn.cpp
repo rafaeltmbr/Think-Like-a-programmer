@@ -29,16 +29,19 @@ using std::endl;
  * Luhn class
  */
 class Luhn {
-    unsigned long accumulator = 0;
+    unsigned long evenSum = 0;
+    unsigned long oddSum = 0;
     unsigned int length = 0;
+    int getDoubledSum(int i) {
+        i *= 2;
+        return i / 10 + i % 10;
+    }
 public:
     void add(char i) {
-        length++;
-        if (length % 2 == 0) {
-            i *= 2;
-            accumulator += i / 10;
-        }
-        accumulator += i % 10;
+        int temp = getDoubledSum(i);
+        bool even = ++length % 2 == 0;
+        evenSum += even ? temp : i;
+        oddSum += !even ? temp : i;
     }
     bool addChar(char c) {
         if (! isdigit(c) )
@@ -47,10 +50,10 @@ public:
         return true;
     }
     bool isValid(void) {
-        return accumulator % 10 == 0;
+        return length % 2 == 0 ? evenSum % 10 == 0 : oddSum % 10 == 0;
     }
     unsigned long getSum(void) {
-        return accumulator;
+        return length % 2 == 0 ? evenSum : oddSum;
     }
 };
 
