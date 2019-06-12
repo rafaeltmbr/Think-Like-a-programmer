@@ -30,13 +30,15 @@ using std::endl;
  */
 class Luhn {
     unsigned long accumulator = 0;
-    unsigned int max_length = 0;
     unsigned int length = 0;
 public:
-    Luhn(unsigned length) : max_length{length} {};
-    void add(unsigned long i) {
-        accumulator += (2 * i);
+    void add(char i) {
         length++;
+        if (length % 2 == 0) {
+            i *= 2;
+            accumulator += i / 10;
+        }
+        accumulator += i % 10;
     }
     bool addChar(char c) {
         if (! isdigit(c) )
@@ -45,7 +47,10 @@ public:
         return true;
     }
     bool isValid(void) {
-        return (length == max_length) && (accumulator % 10 == 0);
+        return accumulator % 10 == 0;
+    }
+    unsigned long getSum(void) {
+        return accumulator;
     }
 };
 
@@ -53,10 +58,11 @@ public:
  * This is where the party begin.
  */
 int main() {
-    Luhn check(LUHN_NUMBER_LENGTH);
+    Luhn check;
     cout << "\tLuhn check sum\n"
             "Please enter a " << LUHN_NUMBER_LENGTH << " digit number: ";
     while ( check.addChar( getchar() ) )
         ;
     cout << ( check.isValid() ? "Valid" : "Invalid" ) << " number" << endl;
+    cout << "Sum: " << check.getSum() << endl;
 }
