@@ -18,7 +18,6 @@
 
 #include <iostream>
 #include <cctype>
-#include <cstdio>
 using std::cout;
 using std::cin;
 using std::endl;
@@ -64,7 +63,7 @@ int main() {
     Luhn check;
     cout << "\tLuhn check sum\n"
             "Please enter a " << LUHN_NUMBER_LENGTH << " digit number: ";
-    while ( check.addChar( getchar() ) )
+    while ( check.addChar( cin.get() ) )
         ;
     cout << ( check.isValid() ? "Valid" : "Invalid" ) << " number" << endl;
     cout << "Sum: " << check.getSum() << endl;
