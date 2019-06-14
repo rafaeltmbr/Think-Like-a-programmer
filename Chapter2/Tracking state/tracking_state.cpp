@@ -46,6 +46,16 @@
 
 using namespace std;
 
+string receiveInputStream(void);
+void displayDecodedStream(const string &s);
+
+int main()
+{
+    string input = receiveInputStream();
+    Decoder d(input);
+    displayDecodedStream(d.decode());
+}
+
 string receiveInputStream(void)
 {
     cout << "\tTracking state decoder\n"
@@ -58,11 +68,4 @@ string receiveInputStream(void)
 void displayDecodedStream(const string &s)
 {
     cout << "Decoded message: " << s << endl;
-}
-
-int main()
-{
-    string input = receiveInputStream();
-    Decoder d(input);
-    displayDecodedStream(d.decode());
 }
