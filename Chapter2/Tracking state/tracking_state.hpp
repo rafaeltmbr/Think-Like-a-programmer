@@ -16,6 +16,23 @@ public:
     std::string& decode(void);
 };
 
+std::string& Decoder::decode(void) {
+    produceNewMessage();
+    return output;
+}
+
+void Decoder::produceNewMessage(void)
+{
+    std::string token;
+    do {
+        token = getToken();
+        output += token + "\n";
+    }
+    while ( token.length() );
+
+    token.pop_back();
+}
+
 std::string Decoder::getToken(void)
 {
     static bool init = true;
@@ -39,21 +56,5 @@ std::string Decoder::getToken(void)
 
     return token;
 }
-
-void Decoder::produceNewMessage(void)
-{
-    std::string token;
-    do {
-        token = getToken();
-        output += token + "\n";
-    } while ( token.length() );
-    token.pop_back();
-}
-
-std::string& Decoder::decode(void) {
-    produceNewMessage();
-    return output;
-}
-
 
 #endif // TRACKING_STATE_HPP
