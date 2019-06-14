@@ -27,15 +27,14 @@ std::string Decoder::getToken(void)
         std::strcpy(buff, input.c_str());
         token.append( strtok(buff, ",") );
         init = false;
-        return token;
-    }
-    
-    char* tokptr = strtok(NULL, ",");
-    if (tokptr)
-        token.append(tokptr);
-    else {
-        delete buff;
-        init = true;
+    } else {
+        char* tokptr = strtok(NULL, ",");
+        if (tokptr)
+            token.append(tokptr);
+        else {
+            delete buff;
+            init = true;
+        }
     }
 
     return token;
