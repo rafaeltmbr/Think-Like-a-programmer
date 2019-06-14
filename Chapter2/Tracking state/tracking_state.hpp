@@ -7,6 +7,8 @@
 #include <cstdlib>
 
 void showErrorExit(void);
+void invalidTokenExit(const std::string&);
+static const char puncTable[] = { '!', '?', ',', '.', ' ', ';', '"', '\'' };
 enum track_state_t {UPPERCASE, LOWERCASE, PUNCTUATION};
 
 class Decoder {
@@ -40,7 +42,7 @@ void Decoder::produceNewMessage(void)
         else if (res == EOF)
             showErrorExit();
         else
-            break;
+            invalidTokenExit(token);
     }
 }
 
@@ -79,23 +81,41 @@ void Decoder::selectState(int n)
 
 void Decoder::uppercase(int n)
 {
-
+    int res;
+    if ( (res = n % 27) )
+        output.push_back(res -1 + 'A');
+    else
+        state = track_state_t::LOWERCASE;
 }
 
 void Decoder::lowercase(int n)
 {
-
+    int res;
+    if ( (res = n % 27) )
+        output.push_back(res -1 + 'a');
+    else
+        state = track_state_t::PUNCTUATION;
 }
 
 void Decoder::punctuation(int n)
 {
-
+    int res;
+    if ( (res = n % 9) )
+        output.push_back( puncTable[res - 1] );
+    else
+        state = track_state_t::UPPERCASE;
 }
 
 void showErrorExit(void)
 {
     std::fprintf(stderr, "Error %d: %s", errno, strerror(errno));
     std::exit(errno);
+}
+
+void invalidTokenExit(const std::string& token)
+{
+    std::fprintf(stderr, "Invalid input: %s\n", token.c_str());
+    std::exit(EXIT_FAILURE);
 }
 
 #endif // TRACKING_STATE_HPP
