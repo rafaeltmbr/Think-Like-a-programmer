@@ -23,7 +23,8 @@
 
 void fillArray(int* arrayInt, int arrayLength, int rangeStart, int rangeEnd);
 void printArray(int* arrayInt, int arrayLength, const char* separator);
-int mode(int* arrayInt, int arrayLength, int rangeStart, int rangeEnd);
+int mode(int* arrayInt, const int arrayLength, const int rangeStart,
+        const int rangeEnd);
 int biggerCountIndex(int* arrayInt, int arrayLength);
 
 int main()
@@ -51,14 +52,14 @@ void printArray(int* arrayInt, int arrayLength, const char* separator)
     std::cout << arrayInt[lastItem];
 }
 
-int mode(int* arrayInt, int arrayLength, int rangeStart, int rangeEnd)
+int mode(int* arrayInt, const int arrayLength, const int rangeStart,
+        const int rangeEnd)
 {
-    const int startOffset = 0 - rangeStart;
     const int countLength = ABS(rangeEnd - rangeStart + 1);
     int count[countLength] = {0};
 
     for (int i=0; i < arrayLength; i++)
-        count[ arrayInt[i] + startOffset ]++;
+        count[ arrayInt[i] - rangeStart ]++;
 
     return biggerCountIndex(count, countLength) + rangeStart;
 }
