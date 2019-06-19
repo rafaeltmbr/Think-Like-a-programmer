@@ -19,11 +19,12 @@
 #include <cstdlib>
 #include <ctime>
 #define ABS(x) ( (x) < 0 ? -(x) : (x) )
-#define ARRAY_LENGTH 20
+#define ARRAY_LENGTH 10
 
 void fillArray(int* arrayInt, int arrayLength, int rangeStart, int rangeEnd);
 void printArray(int* arrayInt, int arrayLength, const char* separator);
 int mode(int* arrayInt, int arrayLength, int rangeStart, int rangeEnd);
+int biggerCountIndex(int* arrayInt, int arrayLength);
 
 int main()
 {
@@ -59,14 +60,18 @@ int mode(int* arrayInt, int arrayLength, int rangeStart, int rangeEnd)
     for (int i=0; i < arrayLength; i++)
         count[ arrayInt[i] + startOffset ]++;
 
+    return biggerCountIndex(count, countLength) + rangeStart;
+}
+
+int biggerCountIndex(int* arrayInt, int arrayLength)
+{
     int biggerIndex = 0;
-    int biggerCount = count[0];
-    for (int i=1; i < countLength; i++) {
-        if (count[i] > biggerCount) {
+    int biggerCount = arrayInt[0];
+    for (int i=1; i < arrayLength; i++) {
+        if (arrayInt[i] > biggerCount) {
             biggerIndex = i;
-            biggerCount = count[i];
+            biggerCount = arrayInt[i];
         }
     }
-
-    return biggerIndex + rangeStart;
+    return biggerIndex;
 }
