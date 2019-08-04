@@ -26,8 +26,11 @@ String::~String()
 const char* String::cstring(void)
 {
     unsigned int len= list.size();
-    delete cstr;
-    cstr = new char[len+1];
+    if (cstrSize != len) {
+        delete cstr;
+        cstr = new char[len+1];
+        cstrSize = len;
+    }
 
     for (unsigned int i=0; i < len; i++)
         cstr[i] = list[i];

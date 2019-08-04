@@ -7,6 +7,7 @@ class String {
 protected:
     std::vector<char> list;
     char* cstr = nullptr;
+    unsigned int cstrSize = 0;
 
 public:
     String() {};
